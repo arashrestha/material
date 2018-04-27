@@ -33,7 +33,7 @@ class Login extends Component{
             <div style={this.alignCenter}>
                <Card style={this.cardWidth}>
                     <CardHeader
-                    title="ReBrandly" titleColor="blue"
+                    title="ReBrandly" 
                     />
                     <CardTitle title="Login" titleColor="red" />
                     <CardText>
@@ -53,7 +53,7 @@ class Login extends Component{
                         /><br />
                     </CardText>
                     <CardActions style={this.floatActionButtonCenter} >
-                        <RaisedButton label="Login" backgroundColor="blue" onClick={() => this.onsubmit()} />
+                        <RaisedButton label="Login" primary={true} onClick={() => this.onsubmit()} />
                     </CardActions>
                 </Card>
             </div>
