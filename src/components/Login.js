@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Card, CardActions, CardHeader, CardTitle, CardText} from 'material-ui/Card';
 
 
+import RebrandlyApi from '../services/RebrandlyApi';
 
 class Login extends Component{
     alignCenter={
@@ -37,7 +38,7 @@ class Login extends Component{
                     />
                     <CardTitle title="Login" titleColor="red" />
                     <CardText>
-                        <TextField type="text" errorText="This field is required"
+                        <TextField type="text" 
                         hintText="Email Address" value={this.state.email}
                         onChange={(e)=>this.OnEmailChange(e)}
                         fullWidth={true}
@@ -45,7 +46,7 @@ class Login extends Component{
                         /><br />
                         <br />
                         <TextField
-                        hintText="API key" type="password" errorText="This field is required"
+                        hintText="API key" type="password"
                         value={this.state.apikey}
                         onChange={(e)=>this.OnApiChange(e)}
                         floatingLabelText="API key"
@@ -70,30 +71,41 @@ class Login extends Component{
     }
 
     onsubmit(){
-        fetch("https://api.rebrandly.com/v1/account",
-            {
-                headers: {
-                    apikey:this.state.apikey
-                }
-            })
-            .then(response => {
-                if(response.ok){
-                    response.json()
-                    .then(data=>{
-                        console.log(data)
-                        if(data.email === this.state.email){
-                            console.log("Right USER")
-                        }
-                        else{
-                            alert("Not Authorized User")
-                        }
-                    })
-                }
-                else{
-                    alert(response.statusText)
-                }
-            })
+    this.getAccountDetail(this.state.apikey)
+    .then(account => {
+      if(account.email === this.state.email) {
+        sessionStorage.setItem('apikey', this.state.apikey)
+        sessionStorage.setItem('email', this.state.email)
+        this.props.history.push('/board')
+      }
+      else {
+        alert('Credentail mis match')
+      }
+    })
+    .catch(error => {
+      alert(error.message)
+    })
+  }
+
+  getAccountDetail(apikey) {
+    return RebrandlyApi.get('/account', {headers: {apikey: apikey}})
+  }
+
+  componentWillMount() {
+        const apikeySession = sessionStorage.getItem('apikey')
+        if(apikeySession) {
+          this.getAccountDetail(apikeySession)
+          .then(account => {
+            if(account) {
+              this.props.history.push('/board')
+            }
+          })
+          .catch(error => {
+            sessionStorage.removeItem('apikey')
+          })
     }
 }
 
-export default Login;
+}
+
+  export default Login;

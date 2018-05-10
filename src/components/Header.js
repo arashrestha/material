@@ -5,13 +5,16 @@ import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 
+import AccountIcon from './AccountIcon'
+
 
 class Header extends Component {
 constructor(props)
     {
         super(props);
         this.state={
-            open:false
+            open:false,
+            email: ''
         }
     }
 
@@ -19,7 +22,9 @@ constructor(props)
         return(
             <div>
                 <AppBar
-                title="Aarash" onLeftIconButtonClick={
+                title="Rebrandly" 
+                iconElementRight={ <AccountIcon email={ this.state.email } />}
+                onLeftIconButtonClick={
                     () => this.toggleSidebar() }
                 />
                 <Drawer
@@ -37,5 +42,12 @@ constructor(props)
 toggleSidebar(){
     this.setState({sidebarOpen: !this.state.sidebarOpen})
 }
+
+    componentWillMount() {
+        this.setState({
+        email: sessionStorage.getItem('email')
+    })
+    }
+
 }
 export default Header
