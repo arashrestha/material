@@ -36,17 +36,17 @@ class Login extends Component{
                     <CardHeader
                     title="ReBrandly" 
                     />
-                    <CardTitle title="Login" titleColor="red" />
+                    <CardTitle title="Login"     />
                     <CardText>
                         <TextField type="text" 
-                        hintText="Email Address" value={this.state.email}
+                         value={this.state.email}
                         onChange={(e)=>this.OnEmailChange(e)}
                         fullWidth={true}
                         floatingLabelText="Email Address"
                         /><br />
                         <br />
                         <TextField
-                        hintText="API key" type="password"
+                         type="password"
                         value={this.state.apikey}
                         onChange={(e)=>this.OnApiChange(e)}
                         floatingLabelText="API key"
@@ -91,20 +91,24 @@ class Login extends Component{
     return RebrandlyApi.get('/account', {headers: {apikey: apikey}})
   }
 
-  componentWillMount() {
+  componentWillMount()
+   {
         const apikeySession = sessionStorage.getItem('apikey')
-        if(apikeySession) {
+        if(apikeySession)
+        {
           this.getAccountDetail(apikeySession)
-          .then(account => {
-            if(account) {
-              this.props.history.push('/board')
-            }
-          })
+          .then(account => 
+            {
+                if(account) 
+                    {
+                    this.props.history.push('/board')
+                    }
+            })
           .catch(error => {
             sessionStorage.removeItem('apikey')
           })
+        }   
     }
-}
 
 }
 

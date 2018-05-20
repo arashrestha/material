@@ -4,16 +4,23 @@ import React, {Component} from 'react';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-
-import AccountIcon from './AccountIcon'
-
+//router
+import {Link } from 'react-router-dom';
+//components
+import AccountIcon from './AccountIcon';
 
 class Header extends Component {
+    sidebar={
+        textDecoration: "none",
+        fontFamily:" Times New Roman",
+        fontSize:"20px",
+        
+    }
 constructor(props)
     {
         super(props);
         this.state={
-            open:false,
+            siderbarOpen:false,
             email: ''
         }
     }
@@ -30,10 +37,12 @@ constructor(props)
                 <Drawer
                 open={this.state.sidebarOpen}
                 docked={false}
+                
                 onRequestChange={() => this.toggleSidebar()}
                 >
-                    <MenuItem>First</MenuItem>
-                    <MenuItem>Second</MenuItem>
+                    <MenuItem><Link to="/board" style={this.sidebar} >Home</Link></MenuItem>
+                    <MenuItem><Link to="/link" style={this.sidebar}>Link</Link></MenuItem>
+                    <MenuItem><Link to="/clink" style={this.sidebar}>Create Link</Link></MenuItem>
                 </Drawer>
             </div>
         );
