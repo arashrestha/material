@@ -41,6 +41,27 @@ class RebrandlyApi {
           }
         })
     }
-  }
+
+    static delete(path,params){
+      const url = RebrandlyApi.baseUrl + path;
+      const apikey=sessionStorage.getItem('apikey');
+  
+        return fetch(url, {
+          method:'DELETE',
+          headers: {
+            apikey:apikey,
+            'Content-Type':'application/json'
+          }
+        })
+        .then(response => {
+          if (!response.ok) {
+            return Promise.reject(new Error(response.statusText))
+          }
+          else {
+            return response.json()
+          }
+        })
+    }
+}
   
   export default RebrandlyApi;

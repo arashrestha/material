@@ -9,6 +9,12 @@ import {
     TableRowColumn,
 } from 'material-ui/Table';
 
+// Material Component
+
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import EditIcon from 'material-ui/svg-icons/image/edit';
+import IconButton from 'material-ui/IconButton';
+
 import Header from '../Header'
 import RebrandlyApi from '../../services/RebrandlyApi'
 
@@ -34,6 +40,7 @@ class RebrandlyLinks extends Component{
             <TableHeaderColumn>Short URL</TableHeaderColumn>
             <TableHeaderColumn>Edit</TableHeaderColumn>
             <TableHeaderColumn>Delete</TableHeaderColumn>
+            
             </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={this.state.showcheckbox}>
@@ -44,7 +51,16 @@ class RebrandlyLinks extends Component{
                         <TableRowColumn>{link.title}</TableRowColumn>
                         <TableRowColumn>{link.destination}</TableRowColumn>
                         <TableRowColumn>{link.shortUrl}</TableRowColumn>
-                        <TableRowColumn></TableRowColumn>
+                        <TableRowColumn>
+                            <IconButton onClick={() =>this.props.history.push(`/link/${link.id}/edit`) }>
+                                <EditIcon/>
+                            </IconButton>
+                        </TableRowColumn>
+                        <TableRowColumn>
+                            <IconButton onClick={() =>this.deleteLink(link.id)}>
+                                <DeleteIcon/>
+                            </IconButton>
+                        </TableRowColumn>
                         </TableRow>  
                     )
                 })
@@ -60,6 +76,10 @@ class RebrandlyLinks extends Component{
     }
     
     componentWillMount() {
+        this.listLink()
+    }
+
+    listLink(){
         const apikeySession = sessionStorage.getItem('apikey')
         console.log(apikeySession)
         if(apikeySession) {
@@ -75,6 +95,15 @@ class RebrandlyLinks extends Component{
                 
             })
         }
+    }
+    deleteLink(linkId){
+        RebrandlyApi.delete(`/links/${linkId}`)
+        .then(response=>{
+            this.listLink()
+        })
+        .catch(err=>{
+            alert(err.message
+        )})
     }
 }
 

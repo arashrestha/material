@@ -8,7 +8,8 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import Login from './components/Login'
 import AdminBoard from './components/AdminBoard'
 import RebrandlyLinks from './components/links/RebrandlyLinks'
-import CreateLinks from './components/CreateLinks'
+import CreateLinks from './components/links/CreateLinks'
+import EditLinks from './components/links/EditLinks'
 
 
 class App extends Component {
@@ -20,8 +21,9 @@ class App extends Component {
             <Route path="/login" component={Login} />
             <Route exact path="/" render={() => (<Redirect to="/login" />)} />
             <Route path="/board" component={AdminBoard} />
-            <Route path="/link" component={RebrandlyLinks}/>
-            <Route path="/clink" component={CreateLinks}/>
+            <Route exact path="/link" component={RebrandlyLinks}/>
+            <Route path="/link/new" component={CreateLinks}/>
+            <Route path="/link/:id/edit" component={EditLinks}/>
 
           </Switch>
         </BrowserRouter>

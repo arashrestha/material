@@ -42,7 +42,8 @@ constructor(props)
                 >
                     <MenuItem><Link to="/board" style={this.sidebar} >Home</Link></MenuItem>
                     <MenuItem><Link to="/link" style={this.sidebar}>Link</Link></MenuItem>
-                    <MenuItem><Link to="/clink" style={this.sidebar}>Create Link</Link></MenuItem>
+                    <MenuItem><Link to="/link/new" style={this.sidebar}>Create Link</Link></MenuItem>
+                    
                 </Drawer>
             </div>
         );

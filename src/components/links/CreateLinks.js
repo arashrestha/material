@@ -3,8 +3,8 @@ import React ,{Component} from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
-import Header from './Header'
-import RebrandlyApi from '../services/RebrandlyApi'
+import Header from '../Header'
+import RebrandlyApi from '../../services/RebrandlyApi'
 
 class CreateLinks extends Component {
     constructor(props)
@@ -50,36 +50,36 @@ class CreateLinks extends Component {
         this.setState({destination:e.target.value})
     }
     onsubmit(){
-         const apikey=sessionStorage.getItem('apikey')
+         //const apikey=sessionStorage.getItem('apikey')
          const data={
              title:this.state.title,
              destination:this.state.destination,
          }
-        fetch('https://api.rebrandly.com/v1/links', {
-            method:'POST',
-            headers:{
-                apikey:apikey,
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify(data)
-        })
-        .then(response=>{
-            if(response.ok){
-                response.json()
-                .then(links => {
-                    this.props.history.push("/link")
-        
-                })
-            }
-         })
-
-        // RebrandlyApi.post('/links',{body:data})
-        // .then(() => {
-        //     this.props.history.push("/link")
-        //   })
-        //   .catch(err => {
-        //     alert(err.message)
+        // fetch('https://api.rebrandly.com/v1/links', {
+        //     method:'POST',
+        //     headers:{
+        //         apikey:apikey,
+        //         'Content-Type':'application/json'
+        //     },
+        //     body:JSON.stringify(data)
         // })
+        // .then(response=>{
+        //     if(response.ok){
+        //         response.json()
+        //         .then(links => {
+        //             this.props.history.push("/link")
+        
+        //         })
+        //     }
+        //  })
+
+        RebrandlyApi.post('/links',{body:data})
+        .then(() => {
+            this.props.history.push("/link")
+          })
+          .catch(err => {
+            alert(err.message)
+        })
        
 
     }
