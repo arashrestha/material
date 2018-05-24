@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 
 import {
     Table,
@@ -25,7 +26,7 @@ class RebrandlyLinks extends Component{
         super(props);
         this.state={
             showcheckbox:false,
-            links:[],
+            //links:[],
         }
     }
     render(){
@@ -45,7 +46,7 @@ class RebrandlyLinks extends Component{
             </TableHeader>
             <TableBody displayRowCheckbox={this.state.showcheckbox}>
             {
-                this.state.links.map( link => {
+                this.props.lists.map( link => {
                     return(
                         <TableRow key={link.id}>
                         <TableRowColumn>{link.title}</TableRowColumn>
@@ -76,7 +77,7 @@ class RebrandlyLinks extends Component{
     }
     
     componentWillMount() {
-        this.listLink()
+        //this.listLink()
     }
 
     listLink(){
@@ -107,4 +108,9 @@ class RebrandlyLinks extends Component{
     }
 }
 
-export default RebrandlyLinks
+function mapStateToProps(state){
+    return({
+        lists:state.linkReducer
+    })
+}
+export default connect(mapStateToProps)(RebrandlyLinks);
