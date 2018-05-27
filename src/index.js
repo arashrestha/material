@@ -4,20 +4,13 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-import {createStore, combineReducers} from 'redux';
+import {createStore,} from 'redux';
 import {Provider} from 'react-redux';
 
+import reducer from './reducers/index'
+
 const store=createStore(
-    combineReducers({
-        linkReducer:() => {
-            return[{
-                id:'1234',
-                title:'This is title',
-                destination:'https://dest.com',
-                shortUrl:'https://st.ss'
-            }]
-        }
-    })
+   reducer
 );
 
 ReactDOM.render(

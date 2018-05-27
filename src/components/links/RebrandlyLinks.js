@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux'
 
 import {
     Table,
@@ -10,14 +11,15 @@ import {
     TableRowColumn,
 } from 'material-ui/Table';
 
-// Material Component
-
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import EditIcon from 'material-ui/svg-icons/image/edit';
 import IconButton from 'material-ui/IconButton';
-
+// Material Component
 import Header from '../Header'
+//services
 import RebrandlyApi from '../../services/RebrandlyApi'
+//actions
+import {selectLink} from '../../actions/LinkActions'
 
 class RebrandlyLinks extends Component{
     
@@ -53,7 +55,10 @@ class RebrandlyLinks extends Component{
                         <TableRowColumn>{link.destination}</TableRowColumn>
                         <TableRowColumn>{link.shortUrl}</TableRowColumn>
                         <TableRowColumn>
-                            <IconButton onClick={() =>this.props.history.push(`/link/${link.id}/edit`) }>
+                            <IconButton onClick={() => 
+                                this.props.handleEditButtonClick(link)
+                                //this.props.history.push(`/link/${link.id}/edit`) }
+                             }>
                                 <EditIcon/>
                             </IconButton>
                         </TableRowColumn>
@@ -113,4 +118,13 @@ function mapStateToProps(state){
         lists:state.linkReducer
     })
 }
-export default connect(mapStateToProps)(RebrandlyLinks);
+
+function mapDispatchToProps(dispatch){
+    return(
+        bindActionCreators({
+            handleEditButtonClick: selectLink
+
+        },dispatch)
+    )
+}
+export default connect(mapStateToProps, mapDispatchToProps)(RebrandlyLinks);
